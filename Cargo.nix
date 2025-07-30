@@ -2372,7 +2372,7 @@ constant-time operation and embedded-friendly no_std support
         };
         resolvedDefaultFeatures = [ "alloc" ];
       };
-      "bincode" = rec {
+      "bincode 1.3.3" = rec {
         crateName = "bincode";
         version = "1.3.3";
         edition = "2015";
@@ -2392,6 +2392,70 @@ constant-time operation and embedded-friendly no_std support
         ];
         features = {
         };
+      };
+      "bincode 2.0.1" = rec {
+        crateName = "bincode";
+        version = "2.0.1";
+        edition = "2021";
+        description = "A binary serialization / deserialization strategy for transforming structs into bytes and vice versa!";
+        sha256 = "0h5pxp3dqkigjwy926a03sl69n9wv7aq4142a20kw9lhn3bzbsin";
+        authors = [
+          "Ty Overby <ty@pre-alpha.com>"
+          "Zoey Riordan <zoey@dos.cafe>"
+          "Victor Koenders <bincode@trangar.com>"
+        ];
+        dependencies = [
+          {
+            name = "bincode_derive";
+            packageId = "bincode_derive";
+            optional = true;
+          }
+          {
+            name = "serde";
+            packageId = "serde";
+            optional = true;
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "unty";
+            packageId = "unty";
+          }
+        ];
+        devDependencies = [
+          {
+            name = "serde";
+            packageId = "serde";
+            features = [ "derive" ];
+          }
+        ];
+        features = {
+          "alloc" = [ "serde?/alloc" ];
+          "bincode_derive" = [ "dep:bincode_derive" ];
+          "default" = [ "std" "derive" ];
+          "derive" = [ "bincode_derive" ];
+          "serde" = [ "dep:serde" ];
+          "std" = [ "alloc" "serde?/std" ];
+        };
+        resolvedDefaultFeatures = [ "alloc" "bincode_derive" "default" "derive" "std" ];
+      };
+      "bincode_derive" = rec {
+        crateName = "bincode_derive";
+        version = "2.0.1";
+        edition = "2021";
+        description = "Implementation of #[derive(Encode, Decode)] for bincode";
+        sha256 = "029wmh26hq3hhs1gq629y0frn2pkl7ld061rk23fji8g8jd715dz";
+        procMacro = true;
+        authors = [
+          "Zoey Riordan <zoey@dos.cafe>"
+          "Victor Koenders <bincode@trangar.com>"
+        ];
+        dependencies = [
+          {
+            name = "virtue";
+            packageId = "virtue";
+          }
+        ];
+
       };
       "bindgen" = rec {
         crateName = "bindgen";
@@ -3336,11 +3400,11 @@ item that gets emitted.
       };
       "clap" = rec {
         crateName = "clap";
-        version = "4.5.41";
+        version = "4.5.42";
         edition = "2021";
         description = "A simple to use, efficient, and full-featured Command Line Argument Parser";
         crateBin = [];
-        sha256 = "1ydd3a22bxkn2a7bajnw57cwjhawqciyhz2x3rqm8fi4h0pd74my";
+        sha256 = "10m8lrwagli325bs9q30hki3xjsrq75az6r86xsschdv63ask1zd";
         dependencies = [
           {
             name = "clap_builder";
@@ -3379,10 +3443,10 @@ item that gets emitted.
       };
       "clap_builder" = rec {
         crateName = "clap_builder";
-        version = "4.5.41";
+        version = "4.5.42";
         edition = "2021";
         description = "A simple to use, efficient, and full-featured Command Line Argument Parser";
-        sha256 = "0g8w6da5y13kv93psl8c00c7f4q01753wmwx84wr2bv2x50snzkh";
+        sha256 = "0rmrg896szc23rsvpa4jyfnsax0rraickap9qzrsz53wqzrz7x34";
         dependencies = [
           {
             name = "anstream";
@@ -16871,7 +16935,7 @@ possible intended.
         dependencies = [
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "bytemuck";
@@ -17019,7 +17083,7 @@ possible intended.
         dependencies = [
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "cfg-if";
@@ -17266,7 +17330,7 @@ possible intended.
         dependencies = [
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "ctrlc";
@@ -17424,7 +17488,7 @@ possible intended.
         dependencies = [
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "elliptic-curve";
@@ -17458,7 +17522,7 @@ possible intended.
         dependencies = [
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "blake3";
@@ -17525,7 +17589,7 @@ possible intended.
           }
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "clap";
@@ -18110,7 +18174,7 @@ possible intended.
           }
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "cfg-if";
@@ -18223,7 +18287,7 @@ possible intended.
           }
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 1.3.3";
           }
           {
             name = "cfg-if";
@@ -21384,6 +21448,17 @@ Unicode Standard Annex #31.
         ];
 
       };
+      "unty" = rec {
+        crateName = "unty";
+        version = "0.0.4";
+        edition = "2021";
+        description = "Explicitly types your generics";
+        sha256 = "1blhyv01qiv5sb72sal3xa1l8nzck3answawxkkiw3fd2x1phjbd";
+        authors = [
+          "Victor Koenders <bincode@trang.ar>"
+        ];
+
+      };
       "url" = rec {
         crateName = "url";
         version = "2.5.4";
@@ -21698,7 +21773,7 @@ Unicode Standard Annex #31.
           }
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 2.0.1";
           }
           {
             name = "clap";
@@ -21953,7 +22028,7 @@ Unicode Standard Annex #31.
           }
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 2.0.1";
             optional = true;
           }
           {
@@ -21993,7 +22068,7 @@ Unicode Standard Annex #31.
         devDependencies = [
           {
             name = "bincode";
-            packageId = "bincode";
+            packageId = "bincode 2.0.1";
           }
           {
             name = "serde_json";
@@ -22202,6 +22277,16 @@ time in order to be used in Cargo build scripts.
           "Sergio Benitez <sb@sergio.bz>"
         ];
 
+      };
+      "virtue" = rec {
+        crateName = "virtue";
+        version = "0.0.18";
+        edition = "2021";
+        description = "A sinless derive macro helper";
+        sha256 = "1cgp79pzzs117kjlc3jnnkixbyaqri12j40mx2an41qhrymv27h5";
+        features = {
+          "proc-macro2" = [ "dep:proc-macro2" ];
+        };
       };
       "wait-timeout" = rec {
         crateName = "wait-timeout";
