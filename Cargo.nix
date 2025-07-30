@@ -424,6 +424,205 @@ rec {
         };
         resolvedDefaultFeatures = [ "k256" "serde" ];
       };
+      "alloy-sol-macro" = rec {
+        crateName = "alloy-sol-macro";
+        version = "1.3.0";
+        edition = "2024";
+        description = "Solidity to Rust procedural macro";
+        sha256 = "064z3z81z5rr68vgfrn8g8ycagri73qc2g542xw05hnl21xc1nmf";
+        procMacro = true;
+        libName = "alloy_sol_macro";
+        authors = [
+          "Alloy Contributors"
+        ];
+        dependencies = [
+          {
+            name = "alloy-sol-macro-expander";
+            packageId = "alloy-sol-macro-expander";
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "alloy-sol-macro-input";
+            packageId = "alloy-sol-macro-input";
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "proc-macro-error2";
+            packageId = "proc-macro-error2";
+          }
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            features = [ "extra-traits" ];
+          }
+        ];
+        features = {
+          "json" = [ "alloy-sol-macro-expander/json" ];
+        };
+      };
+      "alloy-sol-macro-expander" = rec {
+        crateName = "alloy-sol-macro-expander";
+        version = "1.3.0";
+        edition = "2024";
+        description = "Expander used in the Solidity to Rust procedural macro";
+        sha256 = "1aabpd49pwianxljhg17q6jza10i82v94r12p3c4iw0hy2caby94";
+        libName = "alloy_sol_macro_expander";
+        authors = [
+          "Alloy Contributors"
+        ];
+        dependencies = [
+          {
+            name = "alloy-sol-macro-input";
+            packageId = "alloy-sol-macro-input";
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "const-hex";
+            packageId = "const-hex";
+            rename = "hex";
+            usesDefaultFeatures = false;
+            features = [ "alloc" "core-error" ];
+          }
+          {
+            name = "heck";
+            packageId = "heck 0.5.0";
+          }
+          {
+            name = "indexmap";
+            packageId = "indexmap 2.10.0";
+          }
+          {
+            name = "proc-macro-error2";
+            packageId = "proc-macro-error2";
+          }
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            features = [ "extra-traits" ];
+          }
+          {
+            name = "syn-solidity";
+            packageId = "syn-solidity";
+            usesDefaultFeatures = false;
+            features = [ "visit" "visit-mut" ];
+          }
+          {
+            name = "tiny-keccak";
+            packageId = "tiny-keccak";
+            usesDefaultFeatures = false;
+            features = [ "keccak" ];
+          }
+        ];
+        features = {
+          "json" = [ "dep:alloy-json-abi" "alloy-sol-macro-input/json" ];
+        };
+      };
+      "alloy-sol-macro-input" = rec {
+        crateName = "alloy-sol-macro-input";
+        version = "1.3.0";
+        edition = "2024";
+        description = "Input types for sol!-like macros";
+        sha256 = "11bxs1d2mng440gn5bpj7hsd99ks873l5zbdw9nalj8fsvwsv57l";
+        libName = "alloy_sol_macro_input";
+        authors = [
+          "Alloy Contributors"
+        ];
+        dependencies = [
+          {
+            name = "const-hex";
+            packageId = "const-hex";
+            rename = "hex";
+            usesDefaultFeatures = false;
+            features = [ "alloc" "core-error" ];
+          }
+          {
+            name = "dunce";
+            packageId = "dunce";
+          }
+          {
+            name = "heck";
+            packageId = "heck 0.5.0";
+          }
+          {
+            name = "macro-string";
+            packageId = "macro-string";
+          }
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+          }
+          {
+            name = "syn-solidity";
+            packageId = "syn-solidity";
+            usesDefaultFeatures = false;
+          }
+        ];
+        features = {
+          "json" = [ "dep:alloy-json-abi" "dep:serde_json" "alloy-json-abi/serde_json" ];
+        };
+      };
+      "alloy-sol-types" = rec {
+        crateName = "alloy-sol-types";
+        version = "1.3.0";
+        edition = "2024";
+        description = "Compile-time ABI and EIP-712 implementations";
+        sha256 = "1iasbz1mh2pa7klj03lf7gypcar6r16g0y420a3ph5qc7rpb91d2";
+        libName = "alloy_sol_types";
+        authors = [
+          "Alloy Contributors"
+        ];
+        dependencies = [
+          {
+            name = "alloy-primitives";
+            packageId = "alloy-primitives";
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "alloy-sol-macro";
+            packageId = "alloy-sol-macro";
+            usesDefaultFeatures = false;
+          }
+        ];
+        devDependencies = [
+          {
+            name = "alloy-primitives";
+            packageId = "alloy-primitives";
+            usesDefaultFeatures = false;
+            features = [ "arbitrary" "serde" "rlp" ];
+          }
+        ];
+        features = {
+          "arbitrary" = [ "alloy-primitives/arbitrary" ];
+          "default" = [ "std" ];
+          "eip712-serde" = [ "dep:serde" "alloy-primitives/serde" ];
+          "json" = [ "dep:alloy-json-abi" "alloy-sol-macro/json" ];
+          "std" = [ "alloy-primitives/std" "alloy-json-abi?/std" "serde?/std" ];
+        };
+      };
       "android-tzdata" = rec {
         crateName = "android-tzdata";
         version = "0.1.1";
@@ -5401,6 +5600,17 @@ parameters, associated types, and type constraints.
         };
         resolvedDefaultFeatures = [ "digest" "rustls-tls" "verify" ];
       };
+      "dunce" = rec {
+        crateName = "dunce";
+        version = "1.0.5";
+        edition = "2021";
+        description = "Normalize Windows paths to the most compatible format, avoiding UNC where possible";
+        sha256 = "04y8wwv3vvcqaqmqzssi6k0ii9gs6fpz96j5w9nky2ccsl23axwj";
+        authors = [
+          "Kornel <kornel@geekhood.net>"
+        ];
+
+      };
       "ecdsa" = rec {
         crateName = "ecdsa";
         version = "0.16.9";
@@ -9293,7 +9503,7 @@ and keccak-p variants
           }
           {
             name = "windows-targets";
-            packageId = "windows-targets 0.53.2";
+            packageId = "windows-targets 0.53.3";
             target = { target, features }: (target."windows" or false);
           }
         ];
@@ -9316,10 +9526,10 @@ and keccak-p variants
       };
       "libredox" = rec {
         crateName = "libredox";
-        version = "0.1.6";
+        version = "0.1.8";
         edition = "2021";
         description = "Redox stable ABI";
-        sha256 = "1h43psqhnqciwlg1c8jwryvxxdyr4sqxh1mrmm4f9pi8jd5mk224";
+        sha256 = "1xv1bvg17hv6xapdy4fz4ni7dkkzhg2c8fs6md9823psjcn5a3in";
         authors = [
           "4lDO2 <4lDO2@protonmail.com>"
         ];
@@ -9524,6 +9734,44 @@ and keccak-p variants
         features = {
         };
         resolvedDefaultFeatures = [ "default" ];
+      };
+      "macro-string" = rec {
+        crateName = "macro-string";
+        version = "0.1.4";
+        edition = "2021";
+        description = "Eager evaluation of macros like `concat!` and `env!`";
+        sha256 = "1qq42babqlm25823idy2h7q1q8lzx5k6s2bv73ww6pn6hr0869qv";
+        libName = "macro_string";
+        authors = [
+          "David Tolnay <dtolnay@gmail.com>"
+        ];
+        dependencies = [
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+            usesDefaultFeatures = false;
+          }
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            usesDefaultFeatures = false;
+            features = [ "parsing" "printing" ];
+          }
+        ];
+        devDependencies = [
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            usesDefaultFeatures = false;
+            features = [ "printing" "proc-macro" ];
+          }
+        ];
+
       };
       "matchers" = rec {
         crateName = "matchers";
@@ -12026,10 +12274,10 @@ Cargo build scripts.
       };
       "poem" = rec {
         crateName = "poem";
-        version = "3.1.11";
+        version = "3.1.12";
         edition = "2024";
         description = "Poem is a full-featured and easy-to-use web framework with the Rust programming language.";
-        sha256 = "08a1p4sd1mxfidz9km3lp57z024d1xv44lyicai1r6r70a9kx9iy";
+        sha256 = "12yclkkzzjf0wjsgcqwqfpw9c9iy3jam586w8xqji1rcjf0715wz";
         authors = [
           "sunli <scott_s829@163.com>"
         ];
@@ -12068,7 +12316,7 @@ Cargo build scripts.
           {
             name = "hyper-util";
             packageId = "hyper-util";
-            features = [ "server-auto" "tokio" ];
+            features = [ "tokio" ];
           }
           {
             name = "mime";
@@ -12156,7 +12404,7 @@ Cargo build scripts.
           {
             name = "tokio";
             packageId = "tokio";
-            features = [ "sync" "time" "macros" "net" ];
+            features = [ "sync" "time" "macros" ];
           }
           {
             name = "tokio-stream";
@@ -12235,7 +12483,7 @@ Cargo build scripts.
           "rustls" = [ "server" "tokio-rustls" "rustls-pemfile" ];
           "rustls-pemfile" = [ "dep:rustls-pemfile" ];
           "serde_yaml" = [ "dep:serde_yaml" ];
-          "server" = [ "tokio/rt" "tokio/net" "hyper/server" ];
+          "server" = [ "tokio/rt" "tokio/net" "hyper/server" "hyper-util/server-auto" "hyper-util/tokio" ];
           "session" = [ "tokio/rt" "cookie" "rand" "priority-queue" "base64" ];
           "sonic-rs" = [ "dep:sonic-rs" ];
           "sse" = [ "tokio-stream" ];
@@ -12262,10 +12510,10 @@ Cargo build scripts.
       };
       "poem-derive" = rec {
         crateName = "poem-derive";
-        version = "3.1.11";
+        version = "3.1.12";
         edition = "2024";
         description = "Macros for poem";
-        sha256 = "0f6k6c86cdaqar44wjxsxdv4crxyvm2c8jjx9qszxds3agipykl2";
+        sha256 = "1r1dlwqm5kbsdghjfprvx25ryqhb6zyc9kr3zq7j9jz1dpm2yvh5";
         procMacro = true;
         libName = "poem_derive";
         authors = [
@@ -12294,10 +12542,10 @@ Cargo build scripts.
       };
       "poem-openapi" = rec {
         crateName = "poem-openapi";
-        version = "5.1.15";
+        version = "5.1.16";
         edition = "2024";
         description = "OpenAPI support for Poem.";
-        sha256 = "0835avazpsad3qgxbfx5np6y3gjjdssg5lwq56mcglrf28nsk8wb";
+        sha256 = "0k745cmfal2n67nds9yffi02wwxnnr8s6bd33pgh7pglbcwwrjqw";
         libName = "poem_openapi";
         authors = [
           "sunli <scott_s829@163.com>"
@@ -12419,10 +12667,10 @@ Cargo build scripts.
       };
       "poem-openapi-derive" = rec {
         crateName = "poem-openapi-derive";
-        version = "5.1.15";
+        version = "5.1.16";
         edition = "2024";
         description = "Macros for poem-openapi";
-        sha256 = "1s45s8vrzp5r6qsz4lxyfy2kcysc4978nzpab68zsww2hqhxqgfz";
+        sha256 = "11y5gqnyagz17l981pwwdkannywzpaphcmfh8j67liix39lkn9s1";
         procMacro = true;
         libName = "poem_openapi_derive";
         authors = [
@@ -12719,6 +12967,74 @@ equation coefficients
           }
         ];
 
+      };
+      "proc-macro-error-attr2" = rec {
+        crateName = "proc-macro-error-attr2";
+        version = "2.0.0";
+        edition = "2021";
+        description = "Attribute macro for the proc-macro-error2 crate";
+        sha256 = "1ifzi763l7swl258d8ar4wbpxj4c9c2im7zy89avm6xv6vgl5pln";
+        procMacro = true;
+        libName = "proc_macro_error_attr2";
+        authors = [
+          "CreepySkeleton <creepy-skeleton@yandex.ru>"
+          "GnomedDev <david2005thomas@gmail.com>"
+        ];
+        dependencies = [
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+        ];
+
+      };
+      "proc-macro-error2" = rec {
+        crateName = "proc-macro-error2";
+        version = "2.0.1";
+        edition = "2021";
+        description = "Almost drop-in replacement to panics in proc-macros";
+        sha256 = "00lq21vgh7mvyx51nwxwf822w2fpww1x0z8z0q47p8705g2hbv0i";
+        libName = "proc_macro_error2";
+        authors = [
+          "CreepySkeleton <creepy-skeleton@yandex.ru>"
+          "GnomedDev <david2005thomas@gmail.com>"
+        ];
+        dependencies = [
+          {
+            name = "proc-macro-error-attr2";
+            packageId = "proc-macro-error-attr2";
+          }
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            optional = true;
+            usesDefaultFeatures = false;
+          }
+        ];
+        devDependencies = [
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            features = [ "full" ];
+          }
+        ];
+        features = {
+          "default" = [ "syn-error" ];
+          "syn-error" = [ "dep:syn" ];
+        };
+        resolvedDefaultFeatures = [ "default" "syn-error" ];
       };
       "proc-macro2" = rec {
         crateName = "proc-macro2";
@@ -13762,10 +14078,10 @@ equation coefficients
       };
       "redox_syscall" = rec {
         crateName = "redox_syscall";
-        version = "0.5.15";
+        version = "0.5.17";
         edition = "2021";
         description = "A Rust library to access raw Redox system calls";
-        sha256 = "1v28zzpfl6w2gpfbrl1vh64r8hqrjf3x8h57wq8n004lw3fz12ky";
+        sha256 = "0xrvpchkaxph3r5ww2i04v9nwg3843fp3prf8kqlh1gv01b4c1sl";
         libName = "syscall";
         authors = [
           "Jeremy Soller <jackpot51@gmail.com>"
@@ -14754,11 +15070,11 @@ Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm
       };
       "rustc-demangle" = rec {
         crateName = "rustc-demangle";
-        version = "0.1.25";
+        version = "0.1.26";
         edition = "2015";
         description = "Rust compiler symbol demangling.
 ";
-        sha256 = "0kxq6m0drr40434ch32j31dkg00iaf4zxmqg7sqxajhcz0wng7lq";
+        sha256 = "1kja3nb0yhlm4j2p1hl8d7sjmn2g9fa1s4pj0qma5kj2lcndkxsn";
         libName = "rustc_demangle";
         authors = [
           "Alex Crichton <alex@alexcrichton.com>"
@@ -15052,10 +15368,10 @@ Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm
       };
       "rustls" = rec {
         crateName = "rustls";
-        version = "0.23.29";
+        version = "0.23.31";
         edition = "2021";
         description = "Rustls is a modern TLS library written in Rust.";
-        sha256 = "1lcvzvzqk8xx8jzg0x5v3mkqgwkwr7v6zdq8zw8rp6xj74h3i494";
+        sha256 = "1k5ncablbb2h7hzllq3j3panqnks295v56xd488zrq1xy39cpsy0";
         dependencies = [
           {
             name = "log";
@@ -16509,10 +16825,10 @@ possible intended.
       };
       "sp1-build" = rec {
         crateName = "sp1-build";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "Build an SP1 program.";
-        sha256 = "1fjsdyisxc2z7p3s5rrsscana7yjf1jc32a3vwzg61wmhljnbnc8";
+        sha256 = "1ganfz5i3p66wjvk87szjyixl2aln8yxpgzpx1rfvqfm3mhaxc58";
         libName = "sp1_build";
         dependencies = [
           {
@@ -16547,10 +16863,10 @@ possible intended.
       };
       "sp1-core-executor" = rec {
         crateName = "sp1-core-executor";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "1k82ykdhb8mjl08vjb8h0b992mg69jrig0zv68ra0fhy8z2k8vmm";
+        sha256 = "0bfdjgj1hmrnl82h5crnia6dhwnxqdbq1rf5h5adfhqb9camln1a";
         libName = "sp1_core_executor";
         dependencies = [
           {
@@ -16694,11 +17010,11 @@ possible intended.
       };
       "sp1-core-machine" = rec {
         crateName = "sp1-core-machine";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
         links = "sp1-core-machine-sys";
-        sha256 = "05lzyrb80kh67s0pqs6kikg2j1l6d21cc0bd961k5cp5pi53wqr4";
+        sha256 = "03gvd2qnqq25m4428f0q986nx8hxyh1vyw1hwz5ssf9r82pkpqi0";
         libName = "sp1_core_machine";
         dependencies = [
           {
@@ -16942,10 +17258,10 @@ possible intended.
       };
       "sp1-cuda" = rec {
         crateName = "sp1-cuda";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "1546zghmsh33ll4gaf8m84rks7vr7sfp8svlhh8j01q7nl4n5mfk";
+        sha256 = "0vrphvq22s0k5rf4nrqfaja5v2jfrsl8p297ck548xycmp8a3vx2";
         libName = "sp1_cuda";
         dependencies = [
           {
@@ -16995,10 +17311,10 @@ possible intended.
       };
       "sp1-curves" = rec {
         crateName = "sp1-curves";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "0w8w2lrfnpmv1gsjjxhb02zd4in3q3nn4hlr3zcxf9bdmlnahh9z";
+        sha256 = "1yagqi7kyshgdxd1wncisbdwd8bhcz855n1kplki6bd03n1y624j";
         libName = "sp1_curves";
         dependencies = [
           {
@@ -17079,10 +17395,10 @@ possible intended.
       };
       "sp1-derive" = rec {
         crateName = "sp1-derive";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "1yqfr6j0lb3wrbz018xc6cmygymxan0cjdmxiwyn7475h70hmkdq";
+        sha256 = "0d4bdk3pm6iy6y10bp0scwbjfsxmy8zddpp26mpchkac14wi9z2y";
         procMacro = true;
         libName = "sp1_derive";
         dependencies = [
@@ -17100,10 +17416,10 @@ possible intended.
       };
       "sp1-lib" = rec {
         crateName = "sp1-lib";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "0k0j10g0gs2rxj746bhrinavzp1bkbfx4x3ylgdgrh21hwynxfvz";
+        sha256 = "1rb54pky8c724kjfw995qzhg266qi6aji3nqib0fz1g3l05sfh0b";
         libName = "sp1_lib";
         dependencies = [
           {
@@ -17134,10 +17450,10 @@ possible intended.
       };
       "sp1-primitives" = rec {
         crateName = "sp1-primitives";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "0ppj91r96mapfcn8r9kny72x2nipxgavcqc8byc79kmc0fcbxlm4";
+        sha256 = "0pgkyn0qa5vk3rvag4p3wwznwz81119gyjgwy6l5y1my4ajda12m";
         libName = "sp1_primitives";
         dependencies = [
           {
@@ -17196,11 +17512,11 @@ possible intended.
       };
       "sp1-prover" = rec {
         crateName = "sp1-prover";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
         crateBin = [];
-        sha256 = "1zwnjf9azb6lrpcaad27fxsi99j8qgf00aa78l86rlrcnjr3pynm";
+        sha256 = "1v8qdp4al6hpky406q5a6z3dh1yw3xl9dhq9q5p3d2yb7id1vamg";
         libName = "sp1_prover";
         dependencies = [
           {
@@ -17369,10 +17685,10 @@ possible intended.
       };
       "sp1-recursion-circuit" = rec {
         crateName = "sp1-recursion-circuit";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "0g8vgidcdnc63hyklv38jm0hlgm5z1n6dlxqxr4053asis1mywjf";
+        sha256 = "1yymfpk1s42mggfm64n7gqvxw7q90irf4y9d9z7lagy1zbcdasfz";
         libName = "sp1_recursion_circuit";
         dependencies = [
           {
@@ -17512,10 +17828,10 @@ possible intended.
       };
       "sp1-recursion-compiler" = rec {
         crateName = "sp1-recursion-compiler";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "08k8qvnrgz78l4awhxfzldcp1icsk6p6l9br66rhk7s224pv285k";
+        sha256 = "0gcyby4khj1xbgzb7lhjjrzhlk7ymwm2ffzz2q3rq0n64lrp4pri";
         libName = "sp1_recursion_compiler";
         dependencies = [
           {
@@ -17586,11 +17902,11 @@ possible intended.
       };
       "sp1-recursion-core" = rec {
         crateName = "sp1-recursion-core";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
         links = "sp1-recursion-core-sys";
-        sha256 = "07g7iflij2ncg1gnq357bslcf454274kpmxvh95q2iyc6rp2qaj7";
+        sha256 = "0dkmyrh8mb7kcrsn0b9f20xdqjja863iak4ij2f5f3qhh000phbh";
         libName = "sp1_recursion_core";
         dependencies = [
           {
@@ -17761,10 +18077,10 @@ possible intended.
       };
       "sp1-recursion-derive" = rec {
         crateName = "sp1-recursion-derive";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "1753m7c65zs25miaz6q9m1n0ji4x6q1riqmibwlb3dbpf73kpd5p";
+        sha256 = "0wl9am756k9jxz7p6mfz5sqscffah9qchi8zbzhplks1cv1ic83f";
         procMacro = true;
         libName = "sp1_recursion_derive";
         dependencies = [
@@ -17782,10 +18098,10 @@ possible intended.
       };
       "sp1-recursion-gnark-ffi" = rec {
         crateName = "sp1-recursion-gnark-ffi";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "0mr8jy9242yvc3zbbnpwhj2qnbx8ymhjxb02pjrik4xd4b3lh3yb";
+        sha256 = "1ggyjrikh0grcqfjmr6vnhs40lkxg132g7gj9wjfw0f635jqw3mi";
         libName = "sp1_recursion_gnark_ffi";
         dependencies = [
           {
@@ -17873,10 +18189,10 @@ possible intended.
       };
       "sp1-sdk" = rec {
         crateName = "sp1-sdk";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "18b1rws60npblyb8l42pplv4xzsf28kr92nadl5mrxdixz2p6vxv";
+        sha256 = "1fh0vddjd259q82d8l7a592bmn92kgg6imyx6wslv37psl0snzqh";
         libName = "sp1_sdk";
         dependencies = [
           {
@@ -17885,6 +18201,11 @@ possible intended.
             optional = true;
             usesDefaultFeatures = false;
             features = [ "k256" "serde" ];
+          }
+          {
+            name = "alloy-sol-types";
+            packageId = "alloy-sol-types";
+            usesDefaultFeatures = false;
           }
           {
             name = "anyhow";
@@ -18048,20 +18369,20 @@ possible intended.
         ];
         features = {
           "bigint-rug" = [ "sp1-core-machine/bigint-rug" ];
-          "default" = [ "network" ];
+          "default" = [ "network" "reserved-capacity" ];
           "native-gnark" = [ "sp1-prover/native-gnark" ];
           "network" = [ "dep:prost" "dep:alloy-primitives" "dep:tokio" "dep:reqwest" "dep:twirp" "dep:reqwest-middleware" "dep:tonic" "dep:backoff" ];
           "profiling" = [ "sp1-core-executor/profiling" ];
-          "sepolia" = [ "network" "dep:alloy-sol-types" ];
+          "reserved-capacity" = [ "network" ];
         };
-        resolvedDefaultFeatures = [ "cuda" "default" "native-gnark" "network" ];
+        resolvedDefaultFeatures = [ "cuda" "default" "native-gnark" "network" "reserved-capacity" ];
       };
       "sp1-stark" = rec {
         crateName = "sp1-stark";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "SP1 is a performant, 100% open-source, contributor-friendly zkVM.";
-        sha256 = "104gxbshidsl2drs5vcz6m602lnrcxd0asp4l8s6pcx52ck3jq0f";
+        sha256 = "0xr4yc0gdkrfr8hcq72f7llj1zh2v5zs8lxdq51ib7dq7gfhps6v";
         libName = "sp1_stark";
         dependencies = [
           {
@@ -18181,10 +18502,10 @@ possible intended.
       };
       "sp1-verifier" = rec {
         crateName = "sp1-verifier";
-        version = "5.0.8";
+        version = "5.1.0";
         edition = "2021";
         description = "Verifier for SP1 Groth16 and Plonk proofs.";
-        sha256 = "1qgvivgq2qnjx9ckk87a4acm9kwxqgzldv8k4wqan0vvml63zsk7";
+        sha256 = "10jh1p5kp828l47h41xj866zs8lwvn55675v6gbkbdjaxdbj2cjz";
         libName = "sp1_verifier";
         dependencies = [
           {
@@ -18639,6 +18960,39 @@ OSA, Damerau-Levenshtein, Jaro, Jaro-Winkler, and Sørensen-Dice.
           "test" = [ "syn-test-suite/all-features" ];
         };
         resolvedDefaultFeatures = [ "clone-impls" "default" "derive" "extra-traits" "fold" "full" "parsing" "printing" "proc-macro" "visit" "visit-mut" ];
+      };
+      "syn-solidity" = rec {
+        crateName = "syn-solidity";
+        version = "1.3.0";
+        edition = "2024";
+        description = "syn-powered Solidity parser";
+        sha256 = "0sdpcvvsd1w7vcnzjiscb8p1c6mi1w8lic0g1vhp6wzx9zzqbad7";
+        libName = "syn_solidity";
+        authors = [
+          "Alloy Contributors"
+        ];
+        dependencies = [
+          {
+            name = "paste";
+            packageId = "paste";
+          }
+          {
+            name = "proc-macro2";
+            packageId = "proc-macro2";
+          }
+          {
+            name = "quote";
+            packageId = "quote";
+          }
+          {
+            name = "syn";
+            packageId = "syn 2.0.104";
+            features = [ "extra-traits" ];
+          }
+        ];
+        features = {
+        };
+        resolvedDefaultFeatures = [ "visit" "visit-mut" ];
       };
       "sync_wrapper" = rec {
         crateName = "sync_wrapper";
@@ -19267,12 +19621,12 @@ OSA, Damerau-Levenshtein, Jaro, Jaro-Winkler, and Sørensen-Dice.
       };
       "tokio" = rec {
         crateName = "tokio";
-        version = "1.46.1";
+        version = "1.47.0";
         edition = "2021";
         description = "An event-driven, non-blocking I/O platform for writing asynchronous I/O
 backed applications.
 ";
-        sha256 = "05sxldy7kcgysnxyzz1h1l8j3d9mjyqfh7r48ni27gmg9lsa5hqc";
+        sha256 = "0ddv05kl12ilzfi5d83rxld79ppgm1j7lp52ax3kl15n03a4x1j3";
         authors = [
           "Tokio Contributors <team@tokio.rs>"
         ];
@@ -19339,7 +19693,7 @@ backed applications.
           }
           {
             name = "socket2";
-            packageId = "socket2 0.5.10";
+            packageId = "socket2 0.6.0";
             optional = true;
             target = { target, features }: (!(builtins.elem "wasm" target."family"));
             features = [ "all" ];
@@ -19351,7 +19705,7 @@ backed applications.
           }
           {
             name = "windows-sys";
-            packageId = "windows-sys 0.52.0";
+            packageId = "windows-sys 0.59.0";
             optional = true;
             target = { target, features }: (target."windows" or false);
           }
@@ -19364,12 +19718,12 @@ backed applications.
           }
           {
             name = "socket2";
-            packageId = "socket2 0.5.10";
+            packageId = "socket2 0.6.0";
             target = { target, features }: (!(builtins.elem "wasm" target."family"));
           }
           {
             name = "windows-sys";
-            packageId = "windows-sys 0.52.0";
+            packageId = "windows-sys 0.59.0";
             target = { target, features }: (target."windows" or false);
             features = [ "Win32_Foundation" "Win32_Security_Authorization" ];
           }
@@ -22185,13 +22539,13 @@ dependency.
         };
         resolvedDefaultFeatures = [ "component-model" "default" "std" ];
       };
-      "wasm-encoder 0.235.0" = rec {
+      "wasm-encoder 0.236.0" = rec {
         crateName = "wasm-encoder";
-        version = "0.235.0";
+        version = "0.236.0";
         edition = "2021";
         description = "A low-level WebAssembly encoder.
 ";
-        sha256 = "0ajw7asr0q3y778r632f3csrlaw8g50qabghgwv23djw74y3kg5k";
+        sha256 = "02v80y75wjqmxznn7fdylnr89rzzj0hnmqfjc9r3q3dbcs8rf21i";
         libName = "wasm_encoder";
         authors = [
           "Nick Fitzgerald <fitzgen@gmail.com>"
@@ -22204,7 +22558,7 @@ dependency.
           }
           {
             name = "wasmparser";
-            packageId = "wasmparser 0.235.0";
+            packageId = "wasmparser 0.236.0";
             optional = true;
             usesDefaultFeatures = false;
             features = [ "simd" "simd" ];
@@ -22313,13 +22667,13 @@ dependency.
         };
         resolvedDefaultFeatures = [ "component-model" "features" "serde" "simd" "std" "validate" ];
       };
-      "wasmparser 0.235.0" = rec {
+      "wasmparser 0.236.0" = rec {
         crateName = "wasmparser";
-        version = "0.235.0";
+        version = "0.236.0";
         edition = "2021";
         description = "A simple event-driven library for parsing WebAssembly binary files.
 ";
-        sha256 = "05q9craiackn3aq346y7kv5h7s1p548x3zszxpv66bgs3339c4hn";
+        sha256 = "1lp3n8np9lbnx8x1wymm3w7q30s5nmwryywxrgrzc1d78vlfxl8n";
         authors = [
           "Yury Delendik <ydelendik@mozilla.com>"
         ];
@@ -23402,11 +23756,11 @@ dependency.
       };
       "wast" = rec {
         crateName = "wast";
-        version = "235.0.0";
+        version = "236.0.0";
         edition = "2021";
         description = "Customizable Rust parsers for the WebAssembly Text formats WAT and WAST
 ";
-        sha256 = "04rfwxfr5y0ac9grps5cllqhw379pd7vwvrspchr1j96ys9l5nhy";
+        sha256 = "1ipkyk993rbnv0rvr7pradanzjhp2vaas9lvpxpvl6dmxbxbdmhi";
         authors = [
           "Alex Crichton <alex@alexcrichton.com>"
         ];
@@ -23430,7 +23784,7 @@ dependency.
           }
           {
             name = "wasm-encoder";
-            packageId = "wasm-encoder 0.235.0";
+            packageId = "wasm-encoder 0.236.0";
             usesDefaultFeatures = false;
             features = [ "std" ];
           }
@@ -23444,11 +23798,11 @@ dependency.
       };
       "wat" = rec {
         crateName = "wat";
-        version = "1.235.0";
+        version = "1.236.0";
         edition = "2021";
         description = "Rust parser for the WebAssembly Text format, WAT
 ";
-        sha256 = "1ah6y8p54r1jfa6rxv1l3z8w6zijhn7vj85jdawkqy8mf4rf0xz7";
+        sha256 = "026b9mqd522q5fnnkbk3zgmam22l1lczk99igwglc3s0491p0cfc";
         authors = [
           "Alex Crichton <alex@alexcrichton.com>"
         ];
@@ -25586,7 +25940,7 @@ dependency.
           "Win32_Web" = [ "Win32" ];
           "Win32_Web_InternetExplorer" = [ "Win32_Web" ];
         };
-        resolvedDefaultFeatures = [ "Win32" "Win32_Foundation" "Win32_Networking" "Win32_Networking_WinSock" "Win32_Security" "Win32_Storage" "Win32_Storage_FileSystem" "Win32_System" "Win32_System_Console" "Win32_System_IO" "Win32_System_Pipes" "Win32_System_SystemServices" "Win32_System_Threading" "Win32_System_WindowsProgramming" "default" ];
+        resolvedDefaultFeatures = [ "Win32" "Win32_Foundation" "Win32_Networking" "Win32_Networking_WinSock" "Win32_System" "Win32_System_IO" "Win32_System_Threading" "Win32_System_WindowsProgramming" "default" ];
       };
       "windows-sys 0.59.0" = rec {
         crateName = "windows-sys";
@@ -25846,7 +26200,7 @@ dependency.
           "Win32_Web" = [ "Win32" ];
           "Win32_Web_InternetExplorer" = [ "Win32_Web" ];
         };
-        resolvedDefaultFeatures = [ "Wdk" "Wdk_Foundation" "Wdk_Storage" "Wdk_Storage_FileSystem" "Wdk_System" "Wdk_System_IO" "Win32" "Win32_Foundation" "Win32_NetworkManagement" "Win32_NetworkManagement_IpHelper" "Win32_Networking" "Win32_Networking_WinSock" "Win32_Security" "Win32_Security_Authentication" "Win32_Security_Authentication_Identity" "Win32_Security_Credentials" "Win32_Security_Cryptography" "Win32_Storage" "Win32_Storage_FileSystem" "Win32_System" "Win32_System_Console" "Win32_System_Diagnostics" "Win32_System_Diagnostics_Debug" "Win32_System_IO" "Win32_System_Kernel" "Win32_System_LibraryLoader" "Win32_System_Memory" "Win32_System_Pipes" "Win32_System_SystemInformation" "Win32_System_Threading" "Win32_System_WindowsProgramming" "Win32_UI" "Win32_UI_Input" "Win32_UI_Input_KeyboardAndMouse" "default" ];
+        resolvedDefaultFeatures = [ "Wdk" "Wdk_Foundation" "Wdk_Storage" "Wdk_Storage_FileSystem" "Wdk_System" "Wdk_System_IO" "Win32" "Win32_Foundation" "Win32_NetworkManagement" "Win32_NetworkManagement_IpHelper" "Win32_Networking" "Win32_Networking_WinSock" "Win32_Security" "Win32_Security_Authentication" "Win32_Security_Authentication_Identity" "Win32_Security_Credentials" "Win32_Security_Cryptography" "Win32_Storage" "Win32_Storage_FileSystem" "Win32_System" "Win32_System_Console" "Win32_System_Diagnostics" "Win32_System_Diagnostics_Debug" "Win32_System_IO" "Win32_System_Kernel" "Win32_System_LibraryLoader" "Win32_System_Memory" "Win32_System_Pipes" "Win32_System_SystemInformation" "Win32_System_SystemServices" "Win32_System_Threading" "Win32_System_WindowsProgramming" "Win32_UI" "Win32_UI_Input" "Win32_UI_Input_KeyboardAndMouse" "default" ];
       };
       "windows-sys 0.60.2" = rec {
         crateName = "windows-sys";
@@ -25861,7 +26215,7 @@ dependency.
         dependencies = [
           {
             name = "windows-targets";
-            packageId = "windows-targets 0.53.2";
+            packageId = "windows-targets 0.53.3";
             usesDefaultFeatures = false;
           }
         ];
@@ -26217,17 +26571,23 @@ dependency.
         ];
 
       };
-      "windows-targets 0.53.2" = rec {
+      "windows-targets 0.53.3" = rec {
         crateName = "windows-targets";
-        version = "0.53.2";
+        version = "0.53.3";
         edition = "2021";
         description = "Import libs for Windows";
-        sha256 = "1vwanhx2br7dh8mmrszdbcf01bccjr01mcyxcscxl4ffr7y6jvy6";
+        sha256 = "14fwwm136dhs3i1impqrrip7nvkra3bdxa4nqkblj604qhqn1znm";
         libName = "windows_targets";
         authors = [
           "Microsoft"
         ];
         dependencies = [
+          {
+            name = "windows-link";
+            packageId = "windows-link";
+            usesDefaultFeatures = false;
+            target = { target, features }: (target."windows_raw_dylib" or false);
+          }
           {
             name = "windows_aarch64_gnullvm";
             packageId = "windows_aarch64_gnullvm 0.53.0";
